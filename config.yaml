@@ -1,0 +1,258 @@
+gaps:
+  inner_gap: 4
+  outer_gap: 4
+
+general:
+  # Whether to show floating windows as always on top.
+  show_floating_on_top: true
+
+bar:
+  height: "26px"
+  position: "top"
+  opacity: 0.6
+  background: "#20242cc4"
+  foreground: "#ffffff"
+  font_family: "Iosevka NF" # Added custom fonts from nerd fonts https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/Iosevka
+  font_size: "13px"
+  padding: "4px 6px"
+  offset_x: "0"
+  offset_y: "0"
+  border_radius: "0"
+  components_left:
+    - type: "workspaces"
+      font_size: "11px"
+      margin: "0 2px"
+      padding: "0 0px"
+      focused_workspace_border_color: "#ffffff0c"
+      displayed_workspace_border_color: "#ffffff0c"
+      default_workspace_border_color: "black"
+      
+  components_center:
+    - type: "window title"
+  components_right:
+    - type: "tiling direction"
+      font_size: "10px"
+      label_horizontal: "V"
+      label_vertical: "H"
+      background: "#ffffff33"
+      margin: "0 4px"
+      padding: "0 8px"
+    - type: "battery"
+      background: "#ffffff33"
+      margin: "0 2px 0 0"
+      padding: "0 8px"
+    - type: "clock"
+      font_size: "12px"
+      time_formatting: "hh:mm:ss tt  ddd MMM d"
+      margin: "0 0 0 10px"
+
+workspaces:
+  - name: "1"
+    bind_to_monitor: 2
+  - name: "2"
+    bind_to_monitor: 2
+  - name: "3"
+    bind_to_monitor: 2
+  - name: "4"
+    bind_to_monitor: 2
+  - name: "5"
+    bind_to_monitor: 2
+  - name: "6"
+    bind_to_monitor: 1
+  - name: "7"
+    bind_to_monitor: 2
+  - name: "8"
+    bind_to_monitor: 1
+  - name: "9"
+
+window_rules:
+  # Task Manager requires admin privileges to manage and should be ignored unless running
+  # the WM as admin.
+  - command: "ignore"
+    match_process_name: "Taskmgr"
+
+  # Launches system dialogs as floating by default (eg. File Explorer save/open dialog).
+  - command: "set floating"
+    match_class_name: "#32770"
+
+  # Some applications (eg. Steam) have borders that extend past the normal border size.
+  - command: "resize borders 0px -7px -7px -7px"
+    match_process_name: "steam"
+
+  # Always send Firefox windows to workspace 2
+  - command: "move to workspace 2"
+    match_title : "/Mozilla Firefox/"
+  
+  # Always send Discord windows to workspace 7
+  - command: "move to workspace 7"
+    match_process_name: "Discord"
+
+  # Always send Spotify windows to workspace 8
+  - command: "move to workspace 8"
+    match_process_name: "Spotify"
+
+
+binding_modes:
+  - name: "resize"
+    keybindings:
+      # Resize focused window by a percentage or pixel amount.
+      - command: "resize width -2%"
+        bindings: ["H", "Left"]
+      - command: "resize width +2%"
+        bindings: ["L", "Right"]
+      - command: "resize height +2%"
+        bindings: ["K", "Up"]
+      - command: "resize height -2%"
+        bindings: ["J", "Down"]
+      # Press enter/escape to return to default keybindings.
+      - command: "binding mode none"
+        bindings: ["Escape", "Enter"]
+
+keybindings:
+  # Shift focus in a given direction.
+  - command: "focus left"
+    bindings: ["LWin+Alt+Left"]
+  - command: "focus right"
+    bindings: ["LWin+Alt+Right"]
+  - command: "focus up"
+    bindings: ["LWin+Alt+Up"]
+  - command: "focus down"
+    bindings: ["LWin+Alt+Down"]
+
+  # Move focused window in a given direction.
+  - command: "move left"
+    bindings: ["LWin+Shift+Left"]
+  - command: "move right"
+    bindings: [ "LWin+Shift+Right"]
+  - command: "move up"
+    bindings: ["LWin+Shift+Up"]
+  - command: "move down"
+    bindings: ["LWin+Shift+Down"]
+
+  # Resize focused window by a percentage or pixel amount.
+  # - command: "resize width -2%"
+  #   binding: "LWin+U"
+  # - command: "resize width +2%"
+  #   binding: "LWin+P"
+  # - command: "resize height +2%"
+  #   binding: "LWin+O"
+  # - command: "resize height -2%"
+  #   binding: "LWin+I"
+
+  # As an LWinernative to the resize keybindings above, resize mode enables resizing via
+  # HJKL or arrow keys. The binding mode is defined above with the name "resize".
+  - command: "binding mode resize"
+    binding: "LWin+R"
+
+  # Change tiling direction. This determines where new tiling windows will be inserted.
+  - command: "layout vertical"
+    binding: "LWin+H"
+
+  - command: "layout horizontal"
+    binding: "LWin+V"
+
+  # Change focus between floating / tiling windows.
+  - command: "focus mode toggle"
+    binding: "LWin+Space"
+
+  # Change the focused window to be floating / tiling.
+  - command: "toggle floating"
+    binding: "LWin+Shift+Space"
+
+  # Change the focused window to be maximized / unmaximized.
+  - command: "toggle maximized"
+    binding: "LWin+X"
+
+  # Minimize focused window.
+  - command: "set minimized"
+    binding: "LWin+M"
+
+  # Close focused window.
+  - command: "close"
+    binding: "LWin+Shift+Q"
+
+  # Kill GlazeWM process safely.
+  - command: "exit wm"
+    binding: "LWin+Shift+E"
+
+  # Re-evaluate configuration file.
+  - command: "reload config"
+    binding: "LWin+Shift+R"
+  
+  # Focus the workspace that last had focus.
+  - command: "focus workspace recent"
+    binding: "LWin+Y"
+
+  # Focus the next/previous workspace defined in `workspaces` config1.
+  - command: "focus workspace next"
+    binding: "LWin+OemPeriod"
+  - command: "focus workspace prev"
+    binding: "LWin+Oemcomma"
+
+  # Change focus to a workspace defined in `workspaces` config.
+  - command: "focus workspace 1"
+    binding: "LWin+1"
+  - command: "focus workspace 2"
+    binding: "LWin+2"
+  - command: "focus workspace 3"
+    binding: "LWin+3"
+  - command: "focus workspace 4"
+    binding: "LWin+4"
+  - command: "focus workspace 5"
+    binding: "LWin+5"
+  - command: "focus workspace 6"
+    binding: "LWin+6"
+  - command: "focus workspace 7"
+    binding: "LWin+7"
+  - command: "focus workspace 8"
+    binding: "LWin+8"
+  - command: "focus workspace 9"
+    binding: "LWin+9"
+
+  # Move focused workspace to a monitor in a given direction.
+  - command: "move workspace left"
+    binding: "LWin+A"
+  - command: "move workspace right"
+    binding: "LWin+S"
+  #- command: "move workspace up"
+  #  binding: "LWin+D"
+  #- command: "move workspace down"
+  #  binding: "LWin+S"
+
+  # Move focused window to a workspace defined in `workspaces` config.
+  - commands: ["move to workspace 1"]
+    binding: "LWin+Shift+1"
+  - commands: ["move to workspace 2"]
+    binding: "LWin+Shift+2"
+  - commands: ["move to workspace 3"]
+    binding: "LWin+Shift+3"
+  - commands: ["move to workspace 4"]
+    binding: "LWin+Shift+4"
+  - commands: ["move to workspace 5"]
+    binding: "LWin+Shift+5"
+  - commands: ["move to workspace 6"]
+    binding: "LWin+Shift+6"
+  - commands: ["move to workspace 7"]
+    binding: "LWin+Shift+7"
+  - commands: ["move to workspace 8"]
+    binding: "LWin+Shift+8"
+  - commands: ["move to workspace 9"]
+    bindings: ["LWin+Shift+9"]
+
+# ------------------------- Custom Keybindings ------------------------------------------------------
+  
+  # Launch CMD terminal (LWinernatively `exec wt` or `exec %ProgramFiles%/Git/git-bash.exe`
+  # to start Windows Terminal and Git Bash respectively.
+  - command: "exec wt.exe"
+    binding: "LWin+Enter"
+
+  - command: "exec explorer"
+    binding: "LWin+E"
+
+  # Hide the task bar
+  - command: "exec C:\\tools\\nircmd-x64\\nircmd.exe win trans class Shell_TrayWnd 256"
+    binding: "LWin+T"
+
+  # Show the task bar
+  - command: "exec C:\\tools\\nircmd-x64\\nircmd.exe win trans class Shell_TrayWnd 255"
+    binding: "LWin+Shift+T"
